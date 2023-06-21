@@ -905,9 +905,9 @@ class ChartingState extends MusicBeatState
 		}
 
 		#if LUA_ALLOWED
-		var directories:Array<String> = [Paths.mods('custom_notetypes/'), Paths.mods(Paths.currentModDirectory + '/custom_notetypes/')];
+		var directories:Array<String> = [Paths.mods('notetypes/'), Paths.mods(Paths.currentModDirectory + '/notetypes/')];
 		for(mod in Paths.getGlobalMods())
-			directories.push(Paths.mods(mod + '/custom_notetypes/'));
+			directories.push(Paths.mods(mod + '/notetypes/'));
 		for (i in 0...directories.length) {
 			var directory:String =  directories[i];
 			if(FileSystem.exists(directory)) {
@@ -961,9 +961,9 @@ class ChartingState extends MusicBeatState
 
 		#if LUA_ALLOWED
 		var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
-		var directories:Array<String> = [Paths.mods('custom_events/'), Paths.mods(Paths.currentModDirectory + '/custom_events/')];
+		var directories:Array<String> = [Paths.mods('events/'), Paths.mods(Paths.currentModDirectory + '/events/')];
 		for(mod in Paths.getGlobalMods())
-			directories.push(Paths.mods(mod + '/custom_events/'));
+			directories.push(Paths.mods(mod + '/events/'));
 		for (i in 0...directories.length) {
 			var directory:String =  directories[i];
 			if(FileSystem.exists(directory)) {

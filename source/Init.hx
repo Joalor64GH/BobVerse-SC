@@ -68,6 +68,9 @@ class Init extends FlxState
 
     function load()
     {
+		#if html5
+		Paths.initPaths();
+		#end
         #if LUA_ALLOWED
 	Paths.pushGlobalMods();
 	#end
@@ -105,15 +108,12 @@ class Init extends FlxState
 	#end
     }
 
-    function skip() 
-    {
+    function skip() {
 	startGame();
     }
 
-    function startGame() 
-    {
-        FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function() 
-        {
+    function startGame() {
+        FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function() {
 		FlxG.switchState(new TitleState());
 	});
     }
