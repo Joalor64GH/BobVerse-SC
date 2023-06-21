@@ -7,7 +7,9 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.util.FlxTimer;
+import flixel.util.FlxColor;
 import flixel.input.keyboard.FlxKey;
+import lime.app.Application;
 
 class Init extends FlxState
 {
@@ -69,7 +71,6 @@ class Init extends FlxState
         #if LUA_ALLOWED
 	Paths.pushGlobalMods();
 	#end
-        // Just to load a mod on start up if ya got one. For mods that change the menu music and bg
 	WeekData.loadTheFirstEnabledMod();
 
 	FlxG.game.focusLostFramerate = 60;
@@ -82,11 +83,10 @@ class Init extends FlxState
 		
 	Highscore.load();
 
-        if(!initialized && FlxG.save.data != null && FlxG.save.data.fullscreen)
+        if(FlxG.save.data != null && FlxG.save.data.fullscreen)
 	{
 		FlxG.fullscreen = FlxG.save.data.fullscreen;
 	}
-
 	if (FlxG.save.data.weekCompleted != null)
 	{
 		StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
