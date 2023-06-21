@@ -3,6 +3,7 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
+
 import flixel.graphics.FlxGraphic;
 import Section.SwagSection;
 import Song.SwagSong;
@@ -58,9 +59,13 @@ import DialogueBoxPsych;
 import Character;
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
-#else import vlc.MP4Handler; #end
+#if (hxCodec >= "2.6.1") 
+import hxcodec.VideoHandler as MP4Handler;
+#elseif (hxCodec == "2.6.0") 
+import VideoHandler as MP4Handler;
+#else 
+import vlc.MP4Handler; 
+#end
 #end
 
 #if sys
@@ -75,17 +80,26 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
-		['Shit', 0.4], //From 20% to 39%
-		['Bad', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Meh', 0.69], //From 60% to 68%
-		['Nice', 0.7], //69%
-		['Good', 0.8], //From 70% to 79%
-		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
-		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['F-', 0.2],
+		['F', 0.5],
+		['D', 0.6],
+		['C', 0.7],
+		['B', 0.8],
+		['A-', 0.89],
+		['A', 0.90],
+		['A+', 0.93],
+		['S-', 0.96],
+		['S', 0.99],
+		['S+', 0.997],
+		['SS-', 0.998],
+		['SS', 0.999],
+		['SS+', 0.9995],
+		['X-', 0.9997],
+		['X', 0.9998],
+		['X+', 0.999935],
+		['P', 1.0]
 	];
+
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
@@ -247,6 +261,8 @@ class PlayState extends MusicBeatState
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
 
+	public var comboFunction:Void->Void = null;
+
 	override public function create()
 	{
 		Paths.clearStoredMemory();
@@ -264,6 +280,27 @@ class PlayState extends MusicBeatState
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_up')),
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))
 		];
+
+		comboFunction = () -> {
+			// Rating FC
+			ratingFC = "CB";
+			if (songMisses < 1) {
+				if (shits > 0)
+					ratingFC = "FC";
+				else if (bads > 0)
+					ratingFC = "GFC";
+				else if (goods > 0)
+					ratingFC = "MFC";
+				else if (sicks > 0)
+					ratingFC = "SFC";
+			}
+			else if (songMisses < 10) {
+				ratingFC = "SDCB";
+			}
+			else if (cpuControlled) {
+				ratingFC = "Cheater!";
+			}
+		}
 
 		// For the "Just the Two of Us" achievement
 		for (i in 0...keysArray.length)
@@ -721,6 +758,11 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBarBG.y - 78;
 		}
 
+		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, '${SONG.song} ${CoolUtil.difficultyString()} - ${MainMenuState.sovietRussia}', 12);
+		versionTxt.scrollFactor.set();
+		versionTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionTxt);
+
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -733,6 +775,7 @@ class PlayState extends MusicBeatState
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
+		versionTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
 		startingSong = true;
@@ -1011,6 +1054,7 @@ class PlayState extends MusicBeatState
 	public var countdownReady:FlxSprite;
 	public var countdownSet:FlxSprite;
 	public var countdownGo:FlxSprite;
+
 	public static var startOnTime:Float = 0;
 
 	public function startCountdown():Void
@@ -1658,9 +1702,15 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		if(ratingName == '?') {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
+			scoreTxt.text = 'Score: ' + songScore 
+			+ ' // Combo Breaks: ' + songMisses 
+			+ ' // Accuracy: ' + ratingName 
+			+ ' // Rank: ?';
 		} else {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;//peeps wanted no integer rating
+			scoreTxt.text = 'Score: ' + songScore 
+			+ ' // Combo Breaks: ' + songMisses 
+			+ ' // Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
+			+ ' // Rank: ' + ratingName + ' (' + ratingFC + ')';
 		}
 
 		if(botplayTxt.visible) {
@@ -2329,7 +2379,6 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-
 	public var transitioning = false;
 	public function endSong():Void
 	{
@@ -2620,8 +2669,6 @@ class PlayState extends MusicBeatState
 		comboSpr.visible = (!ClientPrefs.hideHud && showCombo);
 		comboSpr.x += ClientPrefs.comboOffset[0];
 		comboSpr.y -= ClientPrefs.comboOffset[1];
-
-
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
 		insert(members.indexOf(strumLineNotes), rating);
 
@@ -2690,7 +2737,6 @@ class PlayState extends MusicBeatState
 
 			daLoop++;
 		}
-
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2, {
 			startDelay: Conductor.crochet * 0.001
@@ -3340,13 +3386,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			// Rating FC
-			ratingFC = "";
-			if (sicks > 0) ratingFC = "SFC";
-			if (goods > 0) ratingFC = "GFC";
-			if (bads > 0 || shits > 0) ratingFC = "FC";
-			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-			else if (songMisses >= 10) ratingFC = "Clear";
+			comboFunction();
 		}
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
