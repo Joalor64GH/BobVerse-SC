@@ -7,6 +7,7 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.util.FlxTimer;
+import flixel.input.keyboard.FlxKey;
 
 class Init extends FlxState
 {
@@ -39,6 +40,11 @@ class Init extends FlxState
         epicSprite.angularVelocity = 30;
 	epicSprite.screenCenter();
         add(epicSprite);
+
+		FlxG.sound.muteKeys = muteKeys;
+		FlxG.sound.volumeDownKeys = volumeDownKeys;
+		FlxG.sound.volumeUpKeys = volumeUpKeys;
+		FlxG.keys.preventDefaultKeys = [TAB];
         
         load();
 
@@ -67,12 +73,6 @@ class Init extends FlxState
 	WeekData.loadTheFirstEnabledMod();
 
 	FlxG.game.focusLostFramerate = 60;
-
-	FlxG.sound.muteKeys = muteKeys;
-	FlxG.sound.volumeDownKeys = volumeDownKeys;
-	FlxG.sound.volumeUpKeys = volumeUpKeys;
-		
-	FlxG.keys.preventDefaultKeys = [TAB];
 
 	PlayerSettings.init();
 

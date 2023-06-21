@@ -16,6 +16,7 @@ import openfl.display.BitmapData;
 import sys.FileSystem;
 import sys.io.File;
 #end
+import flixel.graphics.frames.FlxAtlasFrames;
 import options.GraphicsSettingsSubState;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
