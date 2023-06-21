@@ -4,7 +4,6 @@ package options;
 import Discord.DiscordClient;
 #end
 import flash.text.TextField;
-import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -25,16 +24,77 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
-import openfl.Lib;
+import Colorblind;
 
 using StringTools;
 
-class GraphicsSettingsSubState extends BaseOptionsMenu
+class VisualsUISubState extends BaseOptionsMenu
 {
 	public function new()
 	{
-		title = 'Graphics';
-		rpcTitle = 'Graphics Settings Menu'; //for Discord Rich Presence
+		title = 'Visuals and Graphics';
+		rpcTitle = 'Visuals & Graphics Menu'; //for Discord Rich Presence
+
+		var option:Option = new Option('Note Splashes',
+			"If unchecked, hitting \"Sick!\" notes won't show particles.",
+			'noteSplashes',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Hide HUD',
+			'If checked, hides most HUD elements.',
+			'hideHud',
+			'bool',
+			false);
+		addOption(option);
+		
+		var option:Option = new Option('Time Bar:',
+			"What should the Time Bar display?",
+			'timeBarType',
+			'string',
+			'Time Left',
+			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
+		addOption(option);
+
+		var option:Option = new Option('Song Display Style:',
+			"How should the songs in Freeplay be displayed?",
+			'songDisplay',
+			'string',
+			'None',
+			['Classic', 'Vertical', 'C-Shape', 'D-Shape']);
+		addOption(option);
+
+		var option:Option = new Option('Flashing Lights',
+			"Uncheck this if you're sensitive to flashing lights!",
+			'flashing',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Colorblind filter:',
+			"For Colorblind people",
+			'colorBlindFilter',
+			'string',
+			'None',
+			[
+				'None', 
+				'Deuteranopia', 
+				'Protanopia', 
+				'Tritanopia'
+			]);
+		addOption(option);
+		option.onChange = () -> Colorblind.updateFilter();
+		
+		#if !mobile
+		var option:Option = new Option('FPS Counter',
+			'If unchecked, hides FPS Counter.',
+			'showFPS',
+			'bool',
+			true);
+		addOption(option);
+		option.onChange = onChangeFPSCounter;
+		#end
 
 		//I'd suggest using "Low Quality" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Low Quality', //Name
@@ -69,6 +129,14 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 		super();
 	}
+
+	#if !mobile
+	function onChangeFPSCounter()
+	{
+		if(Main.fpsVar != null)
+			Main.fpsVar.visible = ClientPrefs.showFPS;
+	}
+	#end
 
 	function onChangeAntiAliasing()
 	{
