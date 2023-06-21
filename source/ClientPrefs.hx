@@ -122,6 +122,7 @@ class ClientPrefs {
 		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.hitsoundVolume = hitsoundVolume;
 		FlxG.save.data.pauseMusic = pauseMusic;
+		FlxG.save.data.songDisplay = songDisplay;
 	
 		FlxG.save.flush();
 
