@@ -688,7 +688,7 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection(0);
 
-		healthBar = new HealthBar(0, FlxG.height * (!ClientPrefs.data.downScroll ? 0.89 : 0.11), function() return health, 0, 2);
+		healthBar = new HealthBar(0, FlxG.height * (!ClientPrefs.downScroll ? 0.89 : 0.11), function() return health, 0, 2);
 		healthBar.screenCenter(X);
 		healthBar.leftToRight = false;
 		healthBar.scrollFactor.set();
@@ -723,7 +723,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.visible = cpuControlled;
 		add(botplayTxt);
 		if(ClientPrefs.downScroll) {
-			botplayTxt.y = timeBarBG.y - 78;
+			botplayTxt.y = timeBar.y - 78;
 		}
 
 		var versionTxt:FlxText = new FlxText(4, FlxG.height - 24, 0, '${SONG.song} ${CoolUtil.difficultyString()} - ${MainMenuState.sovietRussia}', 12);
@@ -2364,7 +2364,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
-		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
 		canPause = false;
@@ -2530,6 +2529,7 @@ class PlayState extends MusicBeatState
 	public var totalNotesHit:Float = 0.0;
 
 	public var showCombo:Bool = true;
+	public var showComboNum:Bool = true;
 	public var showRating:Bool = true;
 
 	private function popUpScore(note:Note = null):Void
