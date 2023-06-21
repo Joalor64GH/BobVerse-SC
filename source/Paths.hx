@@ -423,8 +423,53 @@ class Paths
 				return fileToCheck;
 			}
 		}
+
+		for(mod in getGlobalMods()){
+			var fileToCheck:String = mods(mod + '/' + key);
+			if(FileSystem.exists(fileToCheck))
+				return fileToCheck;
+
+		}
 		return 'mods/' + key;
 	}
+
+	public static var globalMods:Array<String> = [];
+
+	static public function getGlobalMods()
+		return globalMods;
+
+	static public function pushGlobalMods() // prob a better way to do this but idc
+	{
+		globalMods = [];
+		var path:String = 'modsList.txt';
+		if(FileSystem.exists(path))
+		{
+			var list:Array<String> = CoolUtil.coolTextFile(path);
+			for (i in list)
+			{
+				var dat = i.split("|");
+				if (dat[1] == "1")
+				{
+					var folder = dat[0];
+					var path = Paths.mods(folder + '/pack.json');
+					if(FileSystem.exists(path)) {
+						try{
+							var rawJson:String = File.getContent(path);
+							if(rawJson != null && rawJson.length > 0) {
+								var stuff:Dynamic = Json.parse(rawJson);
+								var global:Bool = Reflect.getProperty(stuff, "runsGlobally");
+								if(global)globalMods.push(dat[0]);
+							}
+						} catch(e:Dynamic){
+							trace(e);
+						}
+					}
+				}
+			}
+		}
+		return globalMods;
+	}
+
 	static public function getModDirectories():Array<String> {
 		var list:Array<String> = [];
 		var modsFolder:String = mods();

@@ -482,6 +482,8 @@ class ChartingState extends MusicBeatState
 
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('characters/'), Paths.mods(Paths.currentModDirectory + '/characters/'), Paths.getPreloadPath('characters/')];
+		for(mod in Paths.getGlobalMods())
+			directories.push(Paths.mods(mod + '/characters/'));
 		#else
 		var directories:Array<String> = [Paths.getPreloadPath('characters/')];
 		#end
@@ -536,6 +538,8 @@ class ChartingState extends MusicBeatState
 
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Paths.currentModDirectory + '/stages/'), Paths.getPreloadPath('stages/')];
+		for(mod in Paths.getGlobalMods())
+			directories.push(Paths.mods(mod + '/stages/'));
 		#else
 		var directories:Array<String> = [Paths.getPreloadPath('stages/')];
 		#end
@@ -902,6 +906,8 @@ class ChartingState extends MusicBeatState
 
 		#if LUA_ALLOWED
 		var directories:Array<String> = [Paths.mods('custom_notetypes/'), Paths.mods(Paths.currentModDirectory + '/custom_notetypes/')];
+		for(mod in Paths.getGlobalMods())
+			directories.push(Paths.mods(mod + '/custom_notetypes/'));
 		for (i in 0...directories.length) {
 			var directory:String =  directories[i];
 			if(FileSystem.exists(directory)) {
@@ -956,6 +962,8 @@ class ChartingState extends MusicBeatState
 		#if LUA_ALLOWED
 		var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
 		var directories:Array<String> = [Paths.mods('custom_events/'), Paths.mods(Paths.currentModDirectory + '/custom_events/')];
+		for(mod in Paths.getGlobalMods())
+			directories.push(Paths.mods(mod + '/custom_events/'));
 		for (i in 0...directories.length) {
 			var directory:String =  directories[i];
 			if(FileSystem.exists(directory)) {
@@ -1574,9 +1582,9 @@ class ChartingState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = Init.muteKeys;
+			FlxG.sound.volumeDownKeys = Init.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = Init.volumeUpKeys;
 			for (dropDownMenu in blockPressWhileScrolling) {
 				if(dropDownMenu.dropPanel.visible) {
 					blockInput = true;
