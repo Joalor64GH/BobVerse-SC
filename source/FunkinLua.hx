@@ -1305,15 +1305,19 @@ class FunkinLua {
 			#if VIDEOS_ALLOWED
 			if(FileSystem.exists(Paths.video(videoFile))) {
 				PlayState.instance.startVideo(videoFile);
+				return true;
 			} else {
-				luaTrace('Video file not found: ' + videoFile);
+				luaTrace('startVideo: Video file not found: ' + videoFile, false, false, FlxColor.RED);
 			}
+			return false;
+
 			#else
 			if(PlayState.instance.endingSong) {
 				PlayState.instance.endSong();
 			} else {
 				PlayState.instance.startCountdown();
 			}
+			return true;
 			#end
 		});
 		

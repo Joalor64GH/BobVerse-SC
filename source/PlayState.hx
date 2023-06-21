@@ -3,7 +3,6 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
-
 import flixel.graphics.FlxGraphic;
 import Section.SwagSection;
 import Song.SwagSong;
@@ -17,10 +16,6 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.effects.FlxTrail;
-import flixel.addons.effects.FlxTrailArea;
-import flixel.addons.effects.chainable.FlxEffectSprite;
-import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -61,6 +56,12 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Character;
+
+#if VIDEOS_ALLOWED
+#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
+#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
+#else import vlc.MP4Handler; #end
+#end
 
 #if sys
 import sys.FileSystem;
@@ -266,9 +267,7 @@ class PlayState extends MusicBeatState
 
 		// For the "Just the Two of Us" achievement
 		for (i in 0...keysArray.length)
-		{
 			keysPressed.push(false);
-		}
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -402,7 +401,7 @@ class PlayState extends MusicBeatState
 					add(stageCurtains);
 				}
 
-			default: //Week 1
+			default:
 				var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
 				add(bg);
 
@@ -771,65 +770,6 @@ class PlayState extends MusicBeatState
 		var daSong:String = Paths.formatToSongPath(curSong);
 		if (isStoryMode && !seenCutscene)
 		{
-			switch (daSong)
-			{
-				case "monster":
-					var whiteScreen:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
-					add(whiteScreen);
-					whiteScreen.scrollFactor.set();
-					whiteScreen.blend = ADD;
-					camHUD.visible = false;
-					snapCamFollowToPos(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-					inCutscene = true;
-
-					FlxTween.tween(whiteScreen, {alpha: 0}, 1, {
-						startDelay: 0.1,
-						ease: FlxEase.linear,
-						onComplete: function(twn:FlxTween)
-						{
-							camHUD.visible = true;
-							remove(whiteScreen);
-							startCountdown();
-						}
-					});
-					FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2));
-					if(gf != null) gf.playAnim('scared', true);
-					boyfriend.playAnim('scared', true);
-
-				case "winter-horrorland":
-					var blackScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
-					add(blackScreen);
-					blackScreen.scrollFactor.set();
-					camHUD.visible = false;
-					inCutscene = true;
-
-					FlxTween.tween(blackScreen, {alpha: 0}, 0.7, {
-						ease: FlxEase.linear,
-						onComplete: function(twn:FlxTween) {
-							remove(blackScreen);
-						}
-					});
-					FlxG.sound.play(Paths.sound('Lights_Turn_On'));
-					snapCamFollowToPos(400, -2050);
-					FlxG.camera.focusOn(camFollow);
-					FlxG.camera.zoom = 1.5;
-
-					new FlxTimer().start(0.8, function(tmr:FlxTimer)
-					{
-						camHUD.visible = true;
-						remove(blackScreen);
-						FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
-							ease: FlxEase.quadInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								startCountdown();
-							}
-						});
-					});
-
-				default:
-					startCountdown();
-			}
 			seenCutscene = true;
 		}
 		else
@@ -990,55 +930,39 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String):Void {
+	public function startVideo(name:String)
+	{
 		#if VIDEOS_ALLOWED
-		var foundFile:Bool = false;
-		var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
+		inCutscene = true;
+
+		var filepath:String = Paths.video(name);
 		#if sys
-		if(FileSystem.exists(fileName)) {
-			foundFile = true;
-		}
+		if(!FileSystem.exists(filepath))
+		#else
+		if(!OpenFlAssets.exists(filepath))
 		#end
-
-		if(!foundFile) {
-			fileName = Paths.video(name);
-			#if sys
-			if(FileSystem.exists(fileName)) {
-			#else
-			if(OpenFlAssets.exists(fileName)) {
-			#end
-				foundFile = true;
-			}
-		}
-
-		if(foundFile) {
-			inCutscene = true;
-			var bg = new FlxSprite(-FlxG.width, -FlxG.height).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
-			bg.scrollFactor.set();
-			bg.cameras = [camHUD];
-			add(bg);
-
-			(new FlxVideo(fileName)).finishCallback = function() {
-				remove(bg);
-				startAndEnd();
-			}
+		{
+			FlxG.log.warn('Couldnt find video file: ' + name);
+			startAndEnd();
 			return;
 		}
-		else
+
+		var video:MP4Handler = new MP4Handler();
+		video.playVideo(filepath);
+		video.finishCallback = function()
 		{
-			FlxG.log.warn('Couldnt find video file: ' + fileName);
 			startAndEnd();
+			return;
 		}
-		#end
+		#else
+		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
+		return;
+		#end
 	}
 
-	function startAndEnd()
-	{
-		if(endingSong)
-			endSong();
-		else
-			startCountdown();
+	inline function startAndEnd() {
+		(endingSong) ? endSong() : startCountdown();
 	}
 
 	var dialogueCount:Int = 0;
