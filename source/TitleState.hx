@@ -17,7 +17,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 import flixel.graphics.frames.FlxAtlasFrames;
-import options.GraphicsSettingsSubState;
+import options.VisualsSubState;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;

@@ -28,7 +28,7 @@ import Colorblind;
 
 using StringTools;
 
-class VisualsUISubState extends BaseOptionsMenu
+class VisualsSubState extends BaseOptionsMenu
 {
 	public function new()
 	{

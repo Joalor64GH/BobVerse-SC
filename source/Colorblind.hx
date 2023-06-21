@@ -47,11 +47,9 @@ class Colorblind {
     ];
 
     public static function updateFilter(){
-        if (!ClientPrefs.shaders){
-            if (filters.length > 0)
-                filters = [];
-            return;
-        }
+        if (filters.length > 0)
+            filters = [];
+        return;
 
         filters = [];
         FlxG.game.setFilters(filters);
