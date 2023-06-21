@@ -45,7 +45,7 @@
 	<source path="source" />
 
 	<assets path="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets" exclude="*.mp3|*.mp4"  unless="web"/>
+	<assets path="assets" exclude="*.mp3|*.mp4" unless="web"/>
 
 	<assets path="assets/fonts" embed='true'/>
 
