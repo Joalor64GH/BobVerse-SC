@@ -351,8 +351,8 @@ class DialogueEditorState extends MusicBeatState
 
 		if(!blockInput) {
 			FlxG.sound.muteKeys = Init.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.volumeDownKeys = Init.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = Init.volumeUpKeys;
 			if(FlxG.keys.justPressed.SPACE) {
 				reloadText(speedStepper.value);
 			}
