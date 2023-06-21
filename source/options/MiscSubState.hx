@@ -27,7 +27,7 @@ import Controls;
 
 using StringTools;
 
-class VisualsUISubState extends BaseOptionsMenu
+class MiscSubState extends BaseOptionsMenu
 {
 	public function new()
 	{
