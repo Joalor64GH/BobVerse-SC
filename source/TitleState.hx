@@ -40,7 +40,7 @@ class TitleState extends MusicBeatState
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
-	var ngSpr:FlxSprite;
+	var joalorSpr:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -71,11 +71,11 @@ class TitleState extends MusicBeatState
 		if (!initialized)
 		{
 			if(FlxG.sound.music == null) {
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				FlxG.sound.playMusic(Paths.music('BoBMenu'), 0);
 			}
 		}
 
-		Conductor.changeBPM(102); // will be changed once the menu music is finished
+		Conductor.changeBPM(125);
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite();
@@ -134,13 +134,13 @@ class TitleState extends MusicBeatState
 		credTextShit.screenCenter();
 		credTextShit.visible = false;
 
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
-		add(ngSpr);
-		ngSpr.visible = false;
-		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
-		ngSpr.updateHitbox();
-		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = ClientPrefs.globalAntialiasing;
+		joalorSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('title/joalor64'));
+		add(joalorSpr);
+		joalorSpr.visible = false;
+		joalorSpr.setGraphicSize(Std.int(joalorSpr.width * 0.8));
+		joalorSpr.updateHitbox();
+		joalorSpr.screenCenter(X);
+		joalorSpr.antialiasing = ClientPrefs.globalAntialiasing;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -166,7 +166,6 @@ class TitleState extends MusicBeatState
 	}
 
 	var transitioning:Bool = false;
-	private static var playJingle:Bool = false;
 
 	override function update(elapsed:Float)
 	{
@@ -291,23 +290,26 @@ class TitleState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+					createCoolText(['The FITBV Dev Team']);
+				case 3:
+					addMoreText('presents');
 				case 4:
-					addMoreText('newgrounds', -40);
-				case 5:
 					deleteCoolText();
-				case 6:
-					createCoolText(['In association', 'with'], -40);
-				case 8:
-					addMoreText('newgrounds', -40);
-					ngSpr.visible = true;
+				case 5:
+					createCoolText(['Programmed', 'by'], -40);
+				case 7:
+					addMoreText('Joalor64', -40);
+					joalorSpr.visible = true;
 				case 9:
 					deleteCoolText();
-					ngSpr.visible = false;
+					joalorSpr.visible = false;
 				case 10:
-					createCoolText([curWacky[0]]);
+					createCoolText(['Mod Directed by Unhappily']);
 				case 11:
-					addMoreText(curWacky[1]);
+					addMoreText('Text 1');
+					addMoreText('Text 2');
+					addMoreText('Text 3');
+					addMoreText('Text 4');
 				case 12:
 					deleteCoolText();
 				case 14:
@@ -317,7 +319,7 @@ class TitleState extends MusicBeatState
 				case 16:
 					addMoreText('Funkin');
 
-				case 16:
+				case 17:
 					skipIntro();
 			}
 		}
@@ -330,7 +332,7 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			remove(ngSpr);
+			remove(joalorSpr);
 			remove(credGroup);
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 
