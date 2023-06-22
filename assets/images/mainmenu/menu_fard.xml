@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="menu_fard.png">
+	<!-- Created with Adobe Animate version 19.2.0.405 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="fard basic0000" x="10" y="10" width="766" height="148"/>
+	<SubTexture name="fard basic0001" x="10" y="10" width="766" height="148"/>
+	<SubTexture name="fard basic0002" x="10" y="10" width="766" height="148"/>
+	<SubTexture name="fard basic0003" x="786" y="10" width="766" height="148"/>
+	<SubTexture name="fard basic0004" x="786" y="10" width="766" height="148"/>
+	<SubTexture name="fard basic0005" x="786" y="10" width="766" height="148"/>
+	<SubTexture name="fard basic0006" x="10" y="168" width="766" height="148"/>
+	<SubTexture name="fard basic0007" x="10" y="168" width="766" height="148"/>
+	<SubTexture name="fard basic0008" x="10" y="168" width="766" height="148"/>
+	<SubTexture name="fard white0000" x="786" y="168" width="940" height="169" frameX="-3" frameY="-1" frameWidth="945" frameHeight="172"/>
+	<SubTexture name="fard white0001" x="10" y="347" width="945" height="172"/>
+	<SubTexture name="fard white0002" x="965" y="347" width="941" height="167" frameX="-2" frameY="-3" frameWidth="945" frameHeight="172"/>
+</TextureAtlas>
