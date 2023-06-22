@@ -366,7 +366,7 @@ class TitleState extends MusicBeatState
 					chartSpr.visible = false;
 					createCoolText(['Friday Night Funkin']);
 				case 14:
-					addMoreText(['Funkin Into the']);
+					addMoreText('Funkin Into the');
 				case 15:
 					addMoreText('Bob');
 				case 16:
