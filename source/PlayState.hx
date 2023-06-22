@@ -3,10 +3,8 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
-import flixel.graphics.FlxGraphic;
 import Section.SwagSection;
 import Song.SwagSong;
-import WiggleEffect.WiggleEffectType;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -70,6 +68,7 @@ import sys.FileSystem;
 
 using StringTools;
 
+// jesus take the wheel
 class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
@@ -563,14 +562,9 @@ class PlayState extends MusicBeatState
 				gf.visible = false;
 		}
 
-		var file:String = Paths.json(songName + '/dialogue'); //Checks for json/Psych Engine dialogue
+		var file:String = Paths.json(songName + '/dialogue');
 		if (OpenFlAssets.exists(file)) {
 			dialogueJson = DialogueBoxPsych.parseDialogue(file);
-		}
-
-		var file:String = Paths.txt(songName + '/' + songName + 'Dialogue'); //Checks for vanilla/Senpai dialogue
-		if (OpenFlAssets.exists(file)) {
-			dialogue = CoolUtil.coolTextFile(file);
 		}
 
 		Conductor.songPosition = -5000;
@@ -1657,11 +1651,13 @@ class PlayState extends MusicBeatState
 
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore 
+			+ ' // Health: ' + '50%'
 			+ ' // Combo Breaks: ' + songMisses 
 			+ ' // Accuracy: ' + ratingName 
 			+ ' // Rank: ?';
 		} else {
 			scoreTxt.text = 'Score: ' + songScore 
+			+ ' // Health: ' + healthBar.percent + '%'
 			+ ' // Combo Breaks: ' + songMisses 
 			+ ' // Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
 			+ ' // Rank: ' + ratingName + ' (' + ratingFC + ')';
@@ -2384,14 +2380,9 @@ class PlayState extends MusicBeatState
 		#end
 
 		if(ret != FunkinLua.Function_Stop && !transitioning) {
-			if (SONG.validScore)
-			{
-				#if !switch
-				var percent:Float = ratingPercent;
-				if(Math.isNaN(percent)) percent = 0;
+			var percent:Float = ratingPercent;
+			if(Math.isNaN(percent)) percent = 0;
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
-				#end
-			}
 
 			if (chartingMode)
 			{
@@ -3306,7 +3297,6 @@ class PlayState extends MusicBeatState
 			{
 				// Rating Percent
 				ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
-				//trace((totalNotesHit / totalPlayed) + ', Total: ' + totalPlayed + ', notes hit: ' + totalNotesHit);
 
 				// Rating Name
 				if(ratingPercent >= 1)
