@@ -8,7 +8,6 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
-import haxe.Json;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 #if MODS_ALLOWED
@@ -19,7 +18,6 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import options.VisualsSubState;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
-import flixel.math.FlxPoint;
 #if (flixel >= "5.3.0")
 import flixel.sound.FlxSound;
 #else
@@ -30,22 +28,9 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.app.Application;
 import openfl.Assets;
 
 using StringTools;
-
-typedef TitleData =
-{
-	titlex:Float,
-	titley:Float,
-	startx:Float,
-	starty:Float,
-	gfx:Float,
-	gfy:Float,
-	backgroundSprite:String,
-	bpm:Int
-}
 
 class TitleState extends MusicBeatState
 {
@@ -58,8 +43,6 @@ class TitleState extends MusicBeatState
 	var ngSpr:FlxSprite;
 
 	var curWacky:Array<String> = [];
-	
-	var titleJSON:TitleData;
 
 	override public function create():Void
 	{
@@ -70,8 +53,6 @@ class TitleState extends MusicBeatState
 
 		swagShader = new ColorSwap();
 		super.create();
-
-		titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
 
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
@@ -91,22 +72,17 @@ class TitleState extends MusicBeatState
 		{
 			if(FlxG.sound.music == null) {
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-				FlxG.sound.music.fadeIn(4, 0, 0.7);
 			}
 		}
 
-		Conductor.changeBPM(titleJSON.bpm);
+		Conductor.changeBPM(102); // will be changed once the menu music is finished
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite();
-		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none"){
-			bg.loadGraphic(Paths.image(titleJSON.backgroundSprite));
-		} else {
-			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		}
+		bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
-		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
+		logoBl = new FlxSprite(-150, -100);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
@@ -115,7 +91,7 @@ class TitleState extends MusicBeatState
 		logoBl.updateHitbox();
 
 		swagShader = new ColorSwap();
-		gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
+		gfDance = new FlxSprite(512, 40);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
@@ -126,7 +102,7 @@ class TitleState extends MusicBeatState
 		add(logoBl);
 		logoBl.shader = swagShader.shader;
 
-		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
+		titleText = new FlxSprite(100, 576);
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
 		if (!FileSystem.exists(path)){
@@ -311,30 +287,34 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
+					FlxG.sound.music.stop();
+					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+					FlxG.sound.music.fadeIn(4, 0, 0.7);
+				case 2:
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-				case 3:
-					addMoreText('present');
 				case 4:
-					deleteCoolText();
+					addMoreText('newgrounds', -40);
 				case 5:
+					deleteCoolText();
+				case 6:
 					createCoolText(['In association', 'with'], -40);
-				case 7:
+				case 8:
 					addMoreText('newgrounds', -40);
 					ngSpr.visible = true;
-				case 8:
+				case 9:
 					deleteCoolText();
 					ngSpr.visible = false;
-				case 9:
+				case 10:
 					createCoolText([curWacky[0]]);
 				case 11:
 					addMoreText(curWacky[1]);
 				case 12:
 					deleteCoolText();
-				case 13:
-					addMoreText('Friday');
 				case 14:
-					addMoreText('Night');
+					addMoreText('Friday');
 				case 15:
+					addMoreText('Night');
+				case 16:
 					addMoreText('Funkin');
 
 				case 16:

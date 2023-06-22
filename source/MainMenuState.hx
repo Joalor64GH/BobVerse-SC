@@ -25,7 +25,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var sovietRussia:String = 'June 21 DEV BUILD'; //This is also used for Discord RPC
+	public static var sovietRussia:String = 'June 22 DEV BUILD'; //This is also used for Discord RPC
 	public static var psychEngineVersion:String = '0.5.2h'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
