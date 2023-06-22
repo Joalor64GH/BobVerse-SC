@@ -329,13 +329,14 @@ class TitleState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('BoBMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					createCoolText('Directed by');
+					createCoolText(['Directed by']);
 				case 3:
-					addMoreText(['Unhappily', 'niceboy214']);
+					addMoreText('Unhappily');
+					addMoreText('niceboy214');
 				case 4:
 					deleteCoolText();
 				case 5:
-					createCoolText('Programmed by', -40);
+					createCoolText(['Programmed by'], -40);
 				case 7:
 					addMoreText('Joalor64', -40);
 					joalorSpr.visible = true;
@@ -343,22 +344,22 @@ class TitleState extends MusicBeatState
 					deleteCoolText();
 					joalorSpr.visible = false;
 				case 9:
-					createCoolText('Artists');
+					createCoolText(['Artists']);
 					artSpr.visible = true;
 				case 10:
 					deleteCoolText();
 					artSpr.visible = false;
-					createCoolText('Animators');
+					createCoolText(['Animators']);
 					animateSpr.visible = true;
 				case 11:
 					deleteCoolText();
 					animateSpr.visible = false;
-					createCoolText('Composers');
+					createCoolText(['Composers']);
 					composeSpr.visible = true;
 				case 12:
 					deleteCoolText();
 					composeSpr.visible = false;
-					createCoolText('Charters');
+					createCoolText(['Charters']);
 					chartSpr.visible = true;
 				case 13:
 					deleteCoolText();
