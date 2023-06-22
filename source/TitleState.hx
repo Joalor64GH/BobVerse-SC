@@ -3,7 +3,6 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
-
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
