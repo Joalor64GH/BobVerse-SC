@@ -386,7 +386,7 @@ class TitleState extends MusicBeatState
 		{
 			remove(joalorSpr);
 			remove(artSpr);
-			remove(animateSprSpr);
+			remove(animateSpr);
 			remove(composeSpr);
 			remove(chartSpr);
 
