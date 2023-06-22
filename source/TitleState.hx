@@ -51,8 +51,6 @@ class TitleState extends MusicBeatState
 	var chartSpr:FlxSprite;
 	var artSpr:FlxSprite;
 
-	var candance:Bool = true;
-
 	override public function create():Void
 	{
 		Paths.clearStoredMemory();
@@ -65,14 +63,9 @@ class TitleState extends MusicBeatState
 		{
 			startIntro();
 		});
-
-		if (!candance)
-			candance = true;
 	}
 
 	var logoBl:FlxSprite;
-	var gfDance:FlxSprite;
-	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
 	var swagShader:ColorSwap = null;
 
@@ -92,7 +85,7 @@ class TitleState extends MusicBeatState
 		bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
-		logoBl = new FlxSprite(-150, -100);
+		logoBl = new FlxSprite(100, -30);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
@@ -100,31 +93,7 @@ class TitleState extends MusicBeatState
 		logoBl.updateHitbox();
 
 		swagShader = new ColorSwap();
-		gfDance = new FlxSprite(512, 40);
-		
-		#if (desktop && MODS_ALLOWED)
-		var path = "mods/" + Paths.currentModDirectory + "/images/title/GF_assets.png";
-		if (!FileSystem.exists(path))
-		{
-			path = "mods/images/title/GF_assets.png";
-		}
-		if (!FileSystem.exists(path))
-		{
-			path = "assets/images/title/GF_assets.png";
-		}
-		gfDance.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path), File.getContent(StringTools.replace(path, ".png", ".xml")));
-		#else
-		gfDance.frames = Paths.getSparrowAtlas('title/GF_assets');
-		#end
-		gfDance.animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-		gfDance.animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		gfDance.animation.addByPrefix('Hey', 'GF Cheer', 24, false);
-		
-		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
-		
-		add(gfDance);
-		if (swagShader != null)
-			gfDance.shader = swagShader.shader;
+
 		add(logoBl);
 		if (swagShader != null)
 			logoBl.shader = swagShader.shader;
@@ -248,15 +217,11 @@ class TitleState extends MusicBeatState
 				if(titleText != null) titleText.animation.play('press');
 
 				FlxTween.tween(logoBl, {x: -1500, angle: 10, alpha: 0}, 2, {ease: FlxEase.expoInOut});
-				FlxTween.tween(gfDance, {x: -1500}, 3.7, {ease: FlxEase.expoInOut});
 				FlxTween.tween(titleText, {y: 1500}, 3.7, {ease: FlxEase.expoInOut});
 				FlxG.camera.flash(FlxColor.WHITE, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 				transitioning = true;
-
-				gfDance.animation.play('Hey');
-				candance = false;
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
@@ -316,6 +281,7 @@ class TitleState extends MusicBeatState
 
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
 	public static var closedState:Bool = false;
+	
 	override function beatHit()
 	{
 		super.beatHit();
@@ -324,18 +290,6 @@ class TitleState extends MusicBeatState
 
 		if(logoBl != null) 
 			logoBl.animation.play('bump', true);
-
-		if (candance)
-		{
-			if(gfDance != null) 
-			{
-				danceLeft = !danceLeft;
-				if (danceLeft)
-					gfDance.animation.play('danceRight');
-				else
-					gfDance.animation.play('danceLeft');
-			}
-		}
 
 		if(!closedState) {
 			sickBeats++;
