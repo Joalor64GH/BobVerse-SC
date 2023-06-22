@@ -36,11 +36,17 @@ class TitleState extends MusicBeatState
 {
 	public static var initialized:Bool = false;
 
-	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
-	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
+
+	var credTextShit:Alphabet;
+
+	var blackScreen:FlxSprite;
 	var joalorSpr:FlxSprite;
+	var composeSpr:FlxSprite;
+	var animateSpr:FlxSprite;
+	var chartSpr:FlxSprite;
+	var artSpr:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -84,7 +90,6 @@ class TitleState extends MusicBeatState
 
 		logoBl = new FlxSprite(-150, -100);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-		
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
@@ -141,6 +146,38 @@ class TitleState extends MusicBeatState
 		joalorSpr.updateHitbox();
 		joalorSpr.screenCenter(X);
 		joalorSpr.antialiasing = ClientPrefs.globalAntialiasing;
+
+		composeSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('title/composers'));
+		add(composeSpr);
+		composeSpr.visible = false;
+		composeSpr.setGraphicSize(Std.int(composeSpr.width * 0.8));
+		composeSpr.updateHitbox();
+		composeSpr.screenCenter(X);
+		composeSpr.antialiasing = ClientPrefs.globalAntialiasing;
+
+		artSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('title/artists'));
+		add(artSpr);
+		artSpr.visible = false;
+		artSpr.setGraphicSize(Std.int(artSpr.width * 0.8));
+		artSpr.updateHitbox();
+		artSpr.screenCenter(X);
+		artSpr.antialiasing = ClientPrefs.globalAntialiasing;
+
+		chartSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('title/charters'));
+		add(chartSpr);
+		chartSpr.visible = false;
+		chartSpr.setGraphicSize(Std.int(chartSpr.width * 0.8));
+		chartSpr.updateHitbox();
+		chartSpr.screenCenter(X);
+		chartSpr.antialiasing = ClientPrefs.globalAntialiasing;
+
+		animateSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('title/animators'));
+		add(animateSpr);
+		animateSpr.visible = false;
+		animateSpr.setGraphicSize(Std.int(animateSpr.width * 0.8));
+		animateSpr.updateHitbox();
+		animateSpr.screenCenter(X);
+		animateSpr.antialiasing = ClientPrefs.globalAntialiasing;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -270,6 +307,8 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
+		FlxTween.tween(FlxG.camera, {zoom:1.03}, 0.3, {ease: FlxEase.quadOut, type: BACKWARD});
+
 		if(logoBl != null) 
 			logoBl.animation.play('bump', true);
 
@@ -287,37 +326,50 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					FlxG.sound.music.stop();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+					FlxG.sound.playMusic(Paths.music('BoBMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					createCoolText(['The FITBV Dev Team']);
+					createCoolText('Directed by');
 				case 3:
-					addMoreText('presents');
+					addMoreText(['Unhappily', 'niceboy214']);
 				case 4:
 					deleteCoolText();
 				case 5:
-					createCoolText(['Programmed', 'by'], -40);
+					createCoolText('Programmed by', -40);
 				case 7:
 					addMoreText('Joalor64', -40);
 					joalorSpr.visible = true;
-				case 9:
+				case 8:
 					deleteCoolText();
 					joalorSpr.visible = false;
+				case 9:
+					createCoolText('Artists');
+					artSpr.visible = true;
 				case 10:
-					createCoolText(['Mod Directed by Unhappily']);
+					deleteCoolText();
+					artSpr.visible = false;
+					createCoolText('Animators');
+					animateSpr.visible = true;
 				case 11:
-					addMoreText('Text 1');
-					addMoreText('Text 2');
-					addMoreText('Text 3');
-					addMoreText('Text 4');
+					deleteCoolText();
+					animateSpr.visible = false;
+					createCoolText('Composers');
+					composeSpr.visible = true;
 				case 12:
 					deleteCoolText();
+					composeSpr.visible = false;
+					createCoolText('Charters');
+					chartSpr.visible = true;
+				case 13:
+					deleteCoolText();
+					chartSpr.visible = false;
+					createCoolText('Funkin Into');
 				case 14:
-					addMoreText('Friday');
+					addMoreText('the');
 				case 15:
-					addMoreText('Night');
+					addMoreText('Bob');
 				case 16:
-					addMoreText('Funkin');
+					addMoreText('Verse');
 
 				case 17:
 					skipIntro();
@@ -333,7 +385,13 @@ class TitleState extends MusicBeatState
 		if (!skippedIntro)
 		{
 			remove(joalorSpr);
+			remove(artSpr);
+			remove(animateSprSpr);
+			remove(composeSpr);
+			remove(chartSpr);
+
 			remove(credGroup);
+
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 
 			skippedIntro = true;
