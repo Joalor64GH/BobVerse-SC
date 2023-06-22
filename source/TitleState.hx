@@ -48,14 +48,10 @@ class TitleState extends MusicBeatState
 	var chartSpr:FlxSprite;
 	var artSpr:FlxSprite;
 
-	var curWacky:Array<String> = [];
-
 	override public function create():Void
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
-
-		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		swagShader = new ColorSwap();
 		super.create();
@@ -185,21 +181,6 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		else
 			initialized = true;
-	}
-
-	function getIntroTextShit():Array<Array<String>>
-	{
-		var fullText:String = Assets.getText(Paths.txt('introText'));
-
-		var firstArray:Array<String> = fullText.split('\n');
-		var swagGoodArray:Array<Array<String>> = [];
-
-		for (i in firstArray)
-		{
-			swagGoodArray.push(i.split('--'));
-		}
-
-		return swagGoodArray;
 	}
 
 	var transitioning:Bool = false;
