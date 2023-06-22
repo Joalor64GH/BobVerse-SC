@@ -345,10 +345,10 @@ class TitleState extends MusicBeatState
 					FlxG.sound.music.stop();
 					FlxG.sound.playMusic(Paths.music('BoBMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
-				case 2:
 					createCoolText(['Directed by']);
-				case 3:
+				case 2:
 					addMoreText('Unhappily');
+				case 3:
 					addMoreText('niceboy214');
 				case 4:
 					deleteCoolText();
