@@ -24,6 +24,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+
 import options.*;
 
 using StringTools;
@@ -73,7 +74,9 @@ class OptionsState extends MusicBeatState
 		thisThing.antialiasing = ClientPrefs.globalAntialiasing;
 		thisThing.animation.addByPrefix('idle', 'thingidk', 24, false);
 		thisThing.animation.play('idle');
+		thisThing.scale.set(10, 10);
 		thisThing.updateHitbox();
+		add(thisThing);
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);

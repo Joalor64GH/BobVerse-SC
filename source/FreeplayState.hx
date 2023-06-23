@@ -101,6 +101,7 @@ class FreeplayState extends MusicBeatState
 
 		var slash:FlxSprite = new FlxSprite().loadGraphic(Paths.image('mainmenu/slash'));
 		slash.antialiasing = ClientPrefs.globalAntialiasing;
+		slash.scale.set(10, 10);
 		add(slash);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
