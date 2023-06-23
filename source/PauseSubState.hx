@@ -24,7 +24,14 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Exit to menu'];
+	var menuItemsOG:Array<String> = [
+		'Resume', 
+		'Restart Song', 
+		'Change Difficulty', 
+		'Go to Options', 
+		'Exit to freeplay', 
+		'Exit to menu'
+	];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -37,24 +44,31 @@ class PauseSubState extends MusicBeatSubstate
 
 	public static var songName:String = '';
 
+	public static var fromPlayState:Bool = false;
+
 	public function new(x:Float, y:Float)
 	{
 		super();
 		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
+		if (PlayState.storyPlaylist.length > 1 && PlayState.isStoryMode)
+		{
+			menuItemsOG.insert(2, "Skip Song");
+		}
+
 		if(PlayState.chartingMode)
 		{
-			menuItemsOG.insert(2, 'Leave Charting Mode');
+			menuItemsOG.insert(3, 'Leave Charting Mode');
 			
 			var num:Int = 0;
 			if(!PlayState.instance.startingSong)
 			{
 				num = 1;
-				menuItemsOG.insert(3, 'Skip Time');
+				menuItemsOG.insert(4, 'Skip Time');
 			}
-			menuItemsOG.insert(3 + num, 'End Song');
-			menuItemsOG.insert(4 + num, 'Toggle Practice Mode');
-			menuItemsOG.insert(5 + num, 'Toggle Botplay');
+			menuItemsOG.insert(5 + num, 'End Song');
+			menuItemsOG.insert(6 + num, 'Toggle Practice Mode');
+			menuItemsOG.insert(7 + num, 'Toggle Botplay');
 		}
 		menuItems = menuItemsOG;
 
@@ -219,6 +233,8 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Change Difficulty':
 					menuItems = difficultyChoices;
 					regenMenu();
+				case "Skip Song":
+					PlayState.instance.endSong();
 				case 'Toggle Practice Mode':
 					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 					PlayState.changedDifficulty = true;
@@ -252,13 +268,31 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled;
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
+				case "Go to Options":
+					PlayState.deathCounter = 0;
+					PlayState.seenCutscene = false;
+
+					Paths.loadTheFirstEnabledMod();
+					MusicBeatState.switchState(new OptionsState());
+					PlayState.cancelMusicFadeTween();
+					FlxG.sound.playMusic(Paths.music('BoBMenu'));
+					PlayState.changedDifficulty = false;
+					PlayState.chartingMode = false;
+					fromPlayState = true;
+				case "Exit to freeplay":
+					PlayState.deathCounter = 0;
+					PlayState.seenCutscene = false;
+					MusicBeatState.switchState(new FreeplayState());
+					FlxG.sound.playMusic(Paths.music('BoBMenu'));
+					PlayState.changedDifficulty = false;
+					PlayState.chartingMode = false;
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 					if(PlayState.isStoryMode) {
 						MusicBeatState.switchState(new StoryMenuState());
 					} else {
-						MusicBeatState.switchState(new FreeplayState());
+						MusicBeatState.switchState(new MainMenuState());
 					}
 					FlxG.sound.playMusic(Paths.music('BoBMenu'));
 					PlayState.changedDifficulty = false;
