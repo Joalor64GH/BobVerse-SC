@@ -94,15 +94,10 @@ class FreeplayState extends MusicBeatState
 		}
 		WeekData.loadTheFirstEnabledMod();
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite().loadGraphic(Paths.image('menuFreeplay'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 		bg.screenCenter();
-
-		var slash:FlxSprite = new FlxSprite().loadGraphic(Paths.image('mainmenu/slash'));
-		slash.antialiasing = ClientPrefs.globalAntialiasing;
-		slash.scale.set(10, 10);
-		add(slash);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);

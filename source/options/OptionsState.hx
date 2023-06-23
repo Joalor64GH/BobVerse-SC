@@ -74,7 +74,6 @@ class OptionsState extends MusicBeatState
 		thisThing.antialiasing = ClientPrefs.globalAntialiasing;
 		thisThing.animation.addByPrefix('idle', 'thingidk', 24, false);
 		thisThing.animation.play('idle');
-		thisThing.scale.set(10, 10);
 		thisThing.updateHitbox();
 		add(thisThing);
 
