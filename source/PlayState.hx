@@ -72,7 +72,6 @@ import sys.FileSystem;
 
 using StringTools;
 
-// jesus take the wheel
 class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
@@ -474,7 +473,6 @@ class PlayState extends MusicBeatState
 		}
 
 		add(gfGroup); //Needed for blammed lights but i removed them lmao
-
 		add(dadGroup);
 		add(boyfriendGroup);
 
