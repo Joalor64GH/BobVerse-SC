@@ -128,6 +128,7 @@ class PlayState extends MusicBeatState
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
+
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
 	public static var SONG:SwagSong = null;
@@ -207,6 +208,7 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
+	
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
@@ -1651,13 +1653,11 @@ class PlayState extends MusicBeatState
 
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore 
-			+ ' // Health: ' + '50%'
 			+ ' // Combo Breaks: ' + songMisses 
 			+ ' // Accuracy: ' + ratingName 
 			+ ' // Rank: ?';
 		} else {
 			scoreTxt.text = 'Score: ' + songScore 
-			+ ' // Health: ' + healthBar.percent + '%'
 			+ ' // Combo Breaks: ' + songMisses 
 			+ ' // Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
 			+ ' // Rank: ' + ratingName + ' (' + ratingFC + ')';
@@ -2650,7 +2650,7 @@ class PlayState extends MusicBeatState
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 			numScore.visible = (!ClientPrefs.hideHud && showComboNum);
 
-			if(combo >= 10)
+			if(combo >= 0)
 			{
 				insert(members.indexOf(strumLineNotes), comboSpr);
 				insert(members.indexOf(strumLineNotes), numScore);
