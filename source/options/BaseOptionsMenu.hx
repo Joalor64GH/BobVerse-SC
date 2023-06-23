@@ -61,11 +61,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		var slash:FlxSprite = new FlxSprite().loadGraphic(Paths.image('mainmenu/slash'));
-		slash.antialiasing = ClientPrefs.globalAntialiasing;
-		slash.screenCenter();
-		add(slash);
-
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);

@@ -52,6 +52,11 @@ class MasterEditorMenu extends MusicBeatState
 		bg.color = 0xFF353535;
 		add(bg);
 
+		var slash:FlxSprite = new FlxSprite().loadGraphic(Paths.image('mainmenu/slash'));
+		slash.antialiasing = ClientPrefs.globalAntialiasing;
+		slash.screenCenter();
+		add(slash);
+
 		grpTexts = new FlxTypedGroup<Alphabet>();
 		add(grpTexts);
 
