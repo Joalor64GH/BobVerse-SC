@@ -272,8 +272,8 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 
-					Paths.loadTheFirstEnabledMod();
-					MusicBeatState.switchState(new OptionsState());
+					WeekData.loadTheFirstEnabledMod();
+					MusicBeatState.switchState(new options.OptionsState());
 					PlayState.cancelMusicFadeTween();
 					FlxG.sound.playMusic(Paths.music('BoBMenu'));
 					PlayState.changedDifficulty = false;
