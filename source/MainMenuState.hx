@@ -40,7 +40,7 @@ class MainMenuState extends MusicBeatState
 		'story_mode',
 		'freeplay',
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
-		'fard',
+		// 'fard',
 		'credits',
 		'options'
 	];
@@ -199,13 +199,13 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'fard')
+				/* if (optionShit[curSelected] == 'fard')
 				{
 					FlxG.sound.play(Paths.sound('fartsoundlol'));
 					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 				}
 				else
-				{
+				{ */
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
@@ -245,7 +245,7 @@ class MainMenuState extends MusicBeatState
 							});
 						}
 					});
-				}
+				// }
 			}
 			#if desktop
 			else if (FlxG.keys.anyJustPressed(debugKeys))

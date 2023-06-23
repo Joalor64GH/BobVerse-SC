@@ -30,7 +30,7 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Edit Offsets', 'Visuals', 'Gameplay', 'Misc'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Offsets', 'Visuals', 'Gameplay', 'Misc'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -45,7 +45,7 @@ class OptionsState extends MusicBeatState
 				openSubState(new VisualsSubState());
 			case 'Gameplay':
 				openSubState(new GameplaySettingsSubState());
-			case 'Edit Offsets':
+			case 'Offsets':
 				LoadingState.loadAndSwitchState(new NoteOffsetState());
 			case 'Misc':
 				openSubState(new MiscSubState());
@@ -68,13 +68,21 @@ class OptionsState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
+		var thisThing:FlxSprite = new FlxSprite();
+		thisThing.frames = Paths.getSparrowAtlas('mainmenu/thisidk');
+		thisThing.antialiasing = ClientPrefs.globalAntialiasing;
+		thisThing.animation.addByPrefix('idle', 'thingidk', 24, false);
+		thisThing.animation.play('idle');
+		thisThing.updateHitbox();
+
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
 		for (i in 0...options.length)
 		{
 			var optionText:Alphabet = new Alphabet(0, 0, options[i], true, false);
-			optionText.screenCenter();
+			optionText.x = 128;
+			optionText.screenCenter(Y);
 			optionText.y += (100 * (i - (options.length / 2))) + 50;
 			grpOptions.add(optionText);
 		}

@@ -302,9 +302,9 @@ class TitleState extends MusicBeatState
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 					createCoolText(['Directed by']);
 				case 2:
-					addMoreText('Unhappily');
+					addMoreText('fnfguysholy');
 				case 3:
-					addMoreText('niceboy214');
+					addMoreText('plusardx');
 				case 4:
 					deleteCoolText();
 				case 5:

@@ -50,8 +50,15 @@ class VisualsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Colorblind filter:',
-			"For Colorblind people",
+		var option:Option = new Option('Shaders', //Name
+			'If unchecked, disables shaders.', //Description
+			'shaders', //Save data variable name
+			'bool', //Variable type
+			false); //Default value
+		addOption(option);
+
+		var option:Option = new Option('Colorblind Filter:',
+			"For colorblind people.",
 			'colorBlindFilter',
 			'string',
 			'None',
