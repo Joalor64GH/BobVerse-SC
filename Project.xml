@@ -26,7 +26,6 @@
 
 	<!-- _______________________________ Custom Defines ______________________________ -->
 	
-	<!-- CUSTOM DEFINES -->
 	<section if="desktop">
 		<define name="MODS_ALLOWED" />
 		<define name="LUA_ALLOWED" />
@@ -50,6 +49,7 @@
 	<assets path="assets/fonts" embed='true'/>
 
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
+	
 	<section if="MODS_ALLOWED">
 		<assets path='example_mods' rename='mods' embed='false'/>
 	</section>
