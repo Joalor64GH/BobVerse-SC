@@ -43,15 +43,15 @@ class Main extends Sprite
 		}
 	
 		ClientPrefs.loadDefaultKeys();
+		
 		addChild(new FlxGame(gameWidth, gameHeight, Init, #if (flixel < "5.0.0") zoom, #end 60, 60, true, false));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-		if(fpsVar != null) {
+		if(fpsVar != null)
 			fpsVar.visible = ClientPrefs.showFPS;
-		}
 
 		#if html5
 		FlxG.autoPause = FlxG.mouse.visible = false;
