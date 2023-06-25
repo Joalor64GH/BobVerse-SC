@@ -19,6 +19,7 @@ class Init extends FlxState
     public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
     var epicSprite:FlxSprite;
+    var coolText:FlxText;
 
     public function new() 
     {
@@ -37,22 +38,22 @@ class Init extends FlxState
         bg.scale.set(10, 10);
 	bg.screenCenter();
         add(bg);
-
+	
         epicSprite = new FlxSprite().loadGraphic(Paths.image('logo')); // placeholder for now
         epicSprite.antialiasing = ClientPrefs.globalAntialiasing;
         epicSprite.angularVelocity = 30;
 	epicSprite.screenCenter();
         add(epicSprite);
 
-		var coolText:FlxText = new FlxText(5, FlxG.height - 24, 0, "Loading...", 22);
-		coolText.scrollFactor.set();
-		coolText.setFormat("VCR OSD Mono", 26, 0xFFffffff, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(coolText);
+	coolText = new FlxText(5, FlxG.height - 24, 0, "Loading...", 22);
+	coolText.scrollFactor.set();
+	coolText.setFormat("VCR OSD Mono", 26, 0xFFffffff, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	add(coolText);
 
-		FlxG.sound.muteKeys = muteKeys;
-		FlxG.sound.volumeDownKeys = volumeDownKeys;
-		FlxG.sound.volumeUpKeys = volumeUpKeys;
-		FlxG.keys.preventDefaultKeys = [TAB];
+	FlxG.sound.muteKeys = muteKeys;
+	FlxG.sound.volumeDownKeys = volumeDownKeys;
+	FlxG.sound.volumeUpKeys = volumeUpKeys;
+	FlxG.keys.preventDefaultKeys = [TAB];
         
         load();
 
@@ -67,15 +68,14 @@ class Init extends FlxState
     override function update(elapsed)
     {
 	if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE) skip();
-
 	super.update(elapsed);
     }
 
     function load()
     {
-		#if html5
-		Paths.initPaths();
-		#end
+	#if html5
+	Paths.initPaths();
+	#end
         #if LUA_ALLOWED
 	Paths.pushGlobalMods();
 	#end
@@ -113,7 +113,7 @@ class Init extends FlxState
 	#end
     }
 
-	function updateText(NewText:String):Void {
+    function updateText(NewText:String):Void {
 	coolText.text = NewText;
     }
 
