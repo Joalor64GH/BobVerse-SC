@@ -25,7 +25,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var sovietRussia:String = 'June 24 DEV BUILD'; //This is also used for Discord RPC
+	public static var sovietRussia:String = 'June 25 DEV BUILD'; //This is also used for Discord RPC
 	public static var psychEngineVersion:String = '0.5.2h';
 	public static var curSelected:Int = 0;
 
@@ -46,6 +46,7 @@ class MainMenuState extends MusicBeatState
 		'options'
 	];
 
+	var bg:FlxSprite;
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
@@ -78,7 +79,7 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		bg = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
@@ -216,6 +217,11 @@ class MainMenuState extends MusicBeatState
 					{
 						if (curSelected != spr.ID)
 						{
+							FlxTween.tween(FlxG.camera, {zoom: 5}, 0.8, {ease: FlxEase.expoIn});
+							FlxTween.tween(bg, {angle: 45}, 0.8, {ease: FlxEase.expoIn});
+							FlxTween.tween(magenta, {angle: 45}, 0.8, {ease: FlxEase.expoIn});
+							FlxTween.tween(bg, {alpha: 0}, 0.8, {ease: FlxEase.expoIn});
+							FlxTween.tween(magenta, {alpha: 0}, 0.8, {ease: FlxEase.expoIn});
 							FlxTween.tween(spr, {alpha: 0}, 0.4, {
 								ease: FlxEase.quadOut,
 								onComplete: function(twn:FlxTween)

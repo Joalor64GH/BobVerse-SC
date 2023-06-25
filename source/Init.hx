@@ -6,6 +6,7 @@ import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSprite;
+import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.input.keyboard.FlxKey;
@@ -43,6 +44,11 @@ class Init extends FlxState
 	epicSprite.screenCenter();
         add(epicSprite);
 
+		var coolText:FlxText = new FlxText(5, FlxG.height - 24, 0, "Loading...", 22);
+		coolText.scrollFactor.set();
+		coolText.setFormat("VCR OSD Mono", 26, 0xFFffffff, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(coolText);
+
 		FlxG.sound.muteKeys = muteKeys;
 		FlxG.sound.volumeDownKeys = volumeDownKeys;
 		FlxG.sound.volumeUpKeys = volumeUpKeys;
@@ -60,8 +66,7 @@ class Init extends FlxState
 
     override function update(elapsed)
     {
-	if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE)
-		skip();
+	if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE) skip();
 
 	super.update(elapsed);
     }
@@ -108,6 +113,10 @@ class Init extends FlxState
 	#end
     }
 
+	function updateText(NewText:String):Void {
+	coolText.text = NewText;
+    }
+
     function skip() {
 	startGame();
     }
@@ -115,6 +124,7 @@ class Init extends FlxState
     function startGame() {
         FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function() {
 		FlxG.switchState(new TitleState());
+		updateText("Done!");
 	});
     }
 }
