@@ -10,6 +10,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.input.keyboard.FlxKey;
+
 import lime.app.Application;
 
 class Init extends FlxState
@@ -19,14 +20,14 @@ class Init extends FlxState
     public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
     var epicSprite:FlxSprite;
+
     var coolText:FlxText;
 
     public function new() 
     {
 	super();
 
-	persistentUpdate = true;
-	persistentDraw = true;
+	persistentUpdate = persistentDraw = true;
     }
 
     override function create()
@@ -67,7 +68,8 @@ class Init extends FlxState
 
     override function update(elapsed)
     {
-	if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE) skip();
+	if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE) 
+		skip();
 	super.update(elapsed);
     }
 
@@ -113,18 +115,16 @@ class Init extends FlxState
 	#end
     }
 
-    function updateText(NewText:String):Void {
-	coolText.text = NewText;
-    }
-
-    function skip() {
+    function skip() 
+	{
 	startGame();
     }
 
-    function startGame() {
-        FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function() {
+    function startGame() 
+	{
+        FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function() 
+		{
 		FlxG.switchState(new TitleState());
-		updateText("Done!");
 	});
     }
 }
