@@ -24,7 +24,7 @@ import flixel.input.keyboard.FlxKey;
 using StringTools;
 
 // just for testing
-class MainMenuState extends MusicBeatState
+class MainMenuState2 extends MusicBeatState
 {
 	public static var sovietRussia:String = 'June 26 DEV BUILD'; //Used for Discord RPC
 	public static var psychEngineVersion:String = '0.5.2h';
