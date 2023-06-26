@@ -67,6 +67,7 @@ import vlc.MP4Handler;
 #end
 
 #if sys
+import sys.io.File;
 import sys.FileSystem;
 #end
 
@@ -2717,8 +2718,12 @@ class PlayState extends MusicBeatState
 
 			if(combo >= 0)
 			{
-				insert(members.indexOf(strumLineNotes), comboSpr);
 				insert(members.indexOf(strumLineNotes), numScore);
+			}
+
+			if(combo >= 10)
+			{
+				insert(members.indexOf(strumLineNotes), comboSpr);
 			}
 
 			insert(members.indexOf(strumLineNotes), rating);

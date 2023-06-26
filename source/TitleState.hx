@@ -44,7 +44,7 @@ class TitleState extends MusicBeatState
 
 	var blackScreen:FlxSprite;
 
-	var joalorSpr:FlxSprite;
+	var programSpr:FlxSprite;
 
 	var composeSpr:FlxSprite;
 	var animateSpr:FlxSprite;
@@ -131,13 +131,13 @@ class TitleState extends MusicBeatState
 		credTextShit.screenCenter();
 		credTextShit.visible = false;
 
-		joalorSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('title/joalor64'));
-		add(joalorSpr);
-		joalorSpr.visible = false;
-		joalorSpr.setGraphicSize(Std.int(joalorSpr.width * 0.8));
-		joalorSpr.updateHitbox();
-		joalorSpr.screenCenter(X);
-		joalorSpr.antialiasing = ClientPrefs.globalAntialiasing;
+		programSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('title/programmers'));
+		add(programSpr);
+		programSpr.visible = false;
+		programSpr.setGraphicSize(Std.int(programSpr.width * 0.8));
+		programSpr.updateHitbox();
+		programSpr.screenCenter(X);
+		programSpr.antialiasing = ClientPrefs.globalAntialiasing;
 
 		composeSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('title/composers'));
 		add(composeSpr);
@@ -306,15 +306,16 @@ class TitleState extends MusicBeatState
 				case 3:
 					addMoreText('plusardx');
 				case 4:
-					deleteCoolText();
+					addMoreText('fishxdd');
 				case 5:
+					deleteCoolText();
 					createCoolText(['Programmed by'], -40);
 				case 7:
-					addMoreText('Joalor64', -40);
-					joalorSpr.visible = true;
+					addMoreText('These Guys', -40);
+					programSpr.visible = true;
 				case 8:
 					deleteCoolText();
-					joalorSpr.visible = false;
+					programSpr.visible = false;
 				case 9:
 					createCoolText(['Artists']);
 					artSpr.visible = true;
@@ -357,7 +358,7 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			remove(joalorSpr);
+			remove(programSpr);
 			remove(artSpr);
 			remove(animateSpr);
 			remove(composeSpr);
@@ -377,7 +378,6 @@ class TitleState extends MusicBeatState
 				if (logoBl.angle == 4)
 					FlxTween.angle(logoBl, logoBl.angle, -4, 4, {ease: FlxEase.quartInOut});
 			}, 0);
-
 
 			skippedIntro = true;
 		}

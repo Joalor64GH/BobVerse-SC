@@ -77,17 +77,7 @@ class OptionsState extends MusicBeatState
 		thisThing.updateHitbox();
 		add(thisThing);
 
-		grpOptions = new FlxTypedGroup<Alphabet>();
-		add(grpOptions);
-
-		for (i in 0...options.length)
-		{
-			var optionText:Alphabet = new Alphabet(0, 0, options[i], true, false);
-			optionText.x = 128;
-			optionText.screenCenter(Y);
-			optionText.y += (100 * (i - (options.length / 2))) + 50;
-			grpOptions.add(optionText);
-		}
+		initOptions();
 
 		selectorLeft = new Alphabet(0, 0, '>', true, false);
 		add(selectorLeft);
@@ -124,6 +114,20 @@ class OptionsState extends MusicBeatState
 
 		if (controls.ACCEPT) {
 			openSelectedSubstate(options[curSelected]);
+		}
+	}
+
+	function initOptions() {
+		grpOptions = new FlxTypedGroup<Alphabet>();
+		add(grpOptions);
+
+		for (i in 0...options.length)
+		{
+			var optionText:Alphabet = new Alphabet(0, 0, options[i], true, false);
+			optionText.x = 128;
+			optionText.screenCenter(Y);
+			optionText.y += (100 * (i - (options.length / 2))) + 50;
+			grpOptions.add(optionText);
 		}
 	}
 	
