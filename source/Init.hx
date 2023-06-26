@@ -116,15 +116,15 @@ class Init extends FlxState
     }
 
     function skip() 
-	{
+    {
 	startGame();
     }
 
     function startGame() 
-	{
+    {
         FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function() 
-		{
-		FlxG.switchState(new TitleState());
+	{
+	        FlxG.switchState(new TitleState());
 	});
     }
 }
