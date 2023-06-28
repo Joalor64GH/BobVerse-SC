@@ -182,7 +182,6 @@ class NoteOffsetState extends MusicBeatState
 		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.visible = false;
 		timeBar.cameras = [camHUD];
-		timeBar.leftBar.color = FlxColor.LIME;
 
 		add(timeBarBG);
 		add(timeBar);
