@@ -13,7 +13,6 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.ui.FlxBar;
 import flixel.math.FlxPoint;
-import HealthBar;
 
 using StringTools;
 
@@ -35,7 +34,8 @@ class NoteOffsetState extends MusicBeatState
 	var barPercent:Float = 0;
 	var delayMin:Int = 0;
 	var delayMax:Int = 500;
-	var timeBar:HealthBar;
+	var timeBarBG:FlxSprite;
+	var timeBar:FlxBar;
 	var timeTxt:FlxText;
 	var beatText:Alphabet;
 	var beatTween:FlxTween;
@@ -168,13 +168,23 @@ class NoteOffsetState extends MusicBeatState
 		barPercent = ClientPrefs.noteOffset;
 		updateNoteDelay();
 		
-		timeBar = new HealthBar(0, timeTxt.y + (timeTxt.height / 3), 'healthBar', function() return barPercent, delayMin, delayMax);
+		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('timeBar'));
+		timeBarBG.setGraphicSize(Std.int(timeBarBG.width * 1.2));
+		timeBarBG.updateHitbox();
+		timeBarBG.cameras = [camHUD];
+		timeBarBG.screenCenter(X);
+		timeBarBG.visible = false;
+
+		timeBar = new FlxBar(0, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this, 'barPercent', delayMin, delayMax);
 		timeBar.scrollFactor.set();
 		timeBar.screenCenter(X);
+		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
+		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.visible = false;
 		timeBar.cameras = [camHUD];
 		timeBar.leftBar.color = FlxColor.LIME;
 
+		add(timeBarBG);
 		add(timeBar);
 		add(timeTxt);
 
@@ -499,6 +509,7 @@ class NoteOffsetState extends MusicBeatState
 		comboNums.visible = onComboMenu;
 		dumbTexts.visible = onComboMenu;
 		
+		timeBarBG.visible = !onComboMenu;
 		timeBar.visible = !onComboMenu;
 		timeTxt.visible = !onComboMenu;
 		beatText.visible = !onComboMenu;
