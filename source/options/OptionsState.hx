@@ -31,10 +31,19 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
+	public static var dumbBoxes:Array<String> = [ // placeholders for now
+		'template',
+		'templateDark',
+		'templateDarker',
+		'templateDarkest',
+		'templatePing'
+	];
+
+	var epicBox:FlxSprite;
+
 	var options:Array<String> = ['Note Colors', 'Controls', 'Offsets', 'Visuals', 'Gameplay', 'Misc'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
-	public static var menuBG:FlxSprite;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
@@ -76,6 +85,13 @@ class OptionsState extends MusicBeatState
 		thisThing.animation.play('idle');
 		thisThing.updateHitbox();
 		add(thisThing);
+
+		epicBox = new FlxSprite(750, 0).loadGraphic(randomBox());
+		epicBox.antialiasing = ClientPrefs.globalAntialiasing;
+		epicBox.scrollFactor.set(0, 1.5);
+		epicBox.screenCenter(Y);
+		epicBox.updateHitbox();
+		add(epicBox);
 
 		initOptions();
 
@@ -154,5 +170,11 @@ class OptionsState extends MusicBeatState
 			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));
+	}
+
+	public static function randomBox():flixel.system.FlxAssets.FlxGraphicAsset
+	{
+		var chance:Int = FlxG.random.int(0, dumbBoxes.length - 1);
+		return Paths.image('mainmenu/randombox/${dumbBoxes[chance]}');
 	}
 }
