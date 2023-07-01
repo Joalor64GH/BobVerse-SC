@@ -257,6 +257,8 @@ class TitleState extends MusicBeatState
 				credGroup.add(money);
 				textGroup.add(money);
 			}
+			money.y -= 350;
+			FlxTween.tween(money, {y: money.y + 350}, 0.5, {ease: FlxEase.expoOut, startDelay: 0.0});
 		}
 	}
 
@@ -268,6 +270,8 @@ class TitleState extends MusicBeatState
 			coolText.y += (textGroup.length * 60) + 200 + offset;
 			credGroup.add(coolText);
 			textGroup.add(coolText);
+			coolText.y += 750;
+			FlxTween.tween(coolText, {y: coolText.y - 750}, 0.5, {ease: FlxEase.expoOut, startDelay: 0.0});
 		}
 	}
 
@@ -363,12 +367,13 @@ class TitleState extends MusicBeatState
 			remove(animateSpr);
 			remove(composeSpr);
 			remove(chartSpr);
-
 			remove(credGroup);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 
 			// nabbed from kade engine lmao
+			FlxTween.tween(logoBl, {y: -100}, 1.4, {ease: FlxEase.expoInOut});
+			
 			logoBl.angle = -4;
 
 			new FlxTimer().start(0.01, function(tmr:FlxTimer)
