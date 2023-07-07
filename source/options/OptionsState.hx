@@ -86,7 +86,7 @@ class OptionsState extends MusicBeatState
 		thisThing.updateHitbox();
 		add(thisThing);
 
-		epicBox = new FlxSprite(775, 0).loadGraphic(randomBox());
+		epicBox = new FlxSprite(780, 0).loadGraphic(randomBox());
 		epicBox.antialiasing = ClientPrefs.globalAntialiasing;
 		epicBox.scrollFactor.set(0, 1.5);
 		epicBox.screenCenter(Y);

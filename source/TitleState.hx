@@ -285,6 +285,7 @@ class TitleState extends MusicBeatState
 	}
 
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
+	
 	public static var closedState:Bool = false;
 	
 	override function beatHit()
@@ -372,8 +373,6 @@ class TitleState extends MusicBeatState
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 
 			// nabbed from kade engine lmao
-			FlxTween.tween(logoBl, {y: -100}, 1.4, {ease: FlxEase.expoInOut});
-			
 			logoBl.angle = -4;
 
 			new FlxTimer().start(0.01, function(tmr:FlxTimer)
