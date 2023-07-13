@@ -58,6 +58,20 @@
         "url": "https://github.com/Aidan63/linc_discord-rpc"
       },
       {
+        "name": "yagp",
+        "type": "git",
+        "dir": null,
+        "ref": "master",
+        "url": "https://github.com/Yanrishatum/yagp"
+      },
+      {
+        "name": "flxgif",
+        "type": "git",
+        "dir": null,
+        "ref": "main",
+        "url": "https://github.com/MAJigsaw77/flxgif"
+      },
+      {
         "name": "hscript-ex",
         "type": "git",
         "dir": null,

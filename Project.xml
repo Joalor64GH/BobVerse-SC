@@ -75,6 +75,10 @@
 	<!-- Discord Rich Prescence -->
 	<haxelib name="discord_rpc" if="desktop"/>
 
+	<!-- GIF Support -->
+	<haxelib name="yagp" />
+	<haxelib name="flxgif" />
+
 	<!-- Miscellaneous -->
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
 

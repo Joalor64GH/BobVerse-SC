@@ -40,6 +40,7 @@ import editors.ChartingState;
 import editors.CharacterEditorState;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.keyboard.FlxKey;
+import flxgif.FlxGifSprite;
 import Note.EventNote;
 import openfl.events.KeyboardEvent;
 import flixel.util.FlxSave;
@@ -54,7 +55,7 @@ import DialogueBoxPsych;
 import Character;
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.7.0")
+#if (hxCodec >= "3.0.0")
 import hxcodec.flixel.FlxVideo as MP4Handler;
 #elseif (hxCodec >= "2.6.1") 
 import hxcodec.VideoHandler as MP4Handler;
@@ -337,8 +338,7 @@ class PlayState extends MusicBeatState
 		FlxCamera.defaultCameras = [camGame];
 		CustomFadeTransition.nextCamera = camOther;
 
-		persistentUpdate = true;
-		persistentDraw = true;
+		persistentUpdate = persistentDraw = true;
 
 		if (SONG == null)
 			SONG = Song.loadFromJson('tutorial');
@@ -1043,12 +1043,24 @@ class PlayState extends MusicBeatState
 		}
 
 		var video:MP4Handler = new MP4Handler();
+		#if (hxCodec >= "3.0.0")
+		// Recent versions
+		video.play(filepath);
+		video.onEndReached.add(function()
+		{
+			video.dispose();
+			startAndEnd();
+			return;
+		}, true);
+		#else
+		// Older versions
 		video.playVideo(filepath);
 		video.finishCallback = function()
 		{
 			startAndEnd();
 			return;
 		}
+		#end
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
