@@ -10,7 +10,6 @@ import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.input.keyboard.FlxKey;
-
 import lime.app.Application;
 
 class Init extends FlxState
@@ -20,13 +19,11 @@ class Init extends FlxState
     public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
     var epicSprite:FlxSprite;
-
     var coolText:FlxText;
 
     public function new() 
     {
 	super();
-
 	persistentUpdate = persistentDraw = true;
     }
 
@@ -126,7 +123,7 @@ class Init extends FlxState
 	{
 	        if (FlxG.save.data.flashing == null && !FlashingState.leftState)
 			FlxG.switchState(new FlashingState());
-	else
+		else
 			FlxG.switchState(new TitleState());
 	});
     }
