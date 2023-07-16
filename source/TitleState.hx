@@ -4,6 +4,8 @@ package;
 import Discord.DiscordClient;
 #end
 
+import flxgif.FlxGifSprite;
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -51,6 +53,8 @@ class TitleState extends MusicBeatState
 	var chartSpr:FlxSprite;
 	var artSpr:FlxSprite;
 
+	var bg:FlxGifSprite;
+
 	override public function create():Void
 	{
 		Paths.clearStoredMemory();
@@ -95,6 +99,12 @@ class TitleState extends MusicBeatState
 
 		swagShader = new ColorSwap();
 
+		bg = new FlxGifSprite(0, 0);
+		bg.loadGif(Paths.gif('title/titleBG'));
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.screenCenter();
+
+		add(bg);
 		add(logoBl);
 		if (swagShader != null)
 			logoBl.shader = swagShader.shader;
@@ -368,6 +378,7 @@ class TitleState extends MusicBeatState
 			remove(animateSpr);
 			remove(composeSpr);
 			remove(chartSpr);
+			
 			remove(credGroup);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
