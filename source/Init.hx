@@ -125,9 +125,9 @@ class Init extends FlxState
         FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function() 
 	{
 	        if (FlxG.save.data.flashing == null && !FlashingState.leftState)
-				FlxG.switchState(new FlashingState());
-			else
-				FlxG.switchState(new TitleState());
+			FlxG.switchState(new FlashingState());
+	else
+			FlxG.switchState(new TitleState());
 	});
     }
 }

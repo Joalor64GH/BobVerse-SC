@@ -100,7 +100,7 @@ class TitleState extends MusicBeatState
 		swagShader = new ColorSwap();
 
 		bg = new FlxGifSprite(0, 0);
-		bg.loadGif(Paths.gif('title/titleBG'));
+		bg.loadGif('assets/images/title/titleBG.gif');
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		bg.screenCenter();
 

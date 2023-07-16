@@ -285,11 +285,6 @@ class Paths
 		var returnAsset:FlxGraphic = returnGraphic(key, library);
 		return returnAsset;
 	}
-
-	inline static public function gif(key:String, ?library:String)
-	{
-		return getPath('images/$key.gif', IMAGE, library);
-	}
 	
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
