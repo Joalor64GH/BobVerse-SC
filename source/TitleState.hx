@@ -53,7 +53,7 @@ class TitleState extends MusicBeatState
 	var chartSpr:FlxSprite;
 	var artSpr:FlxSprite;
 
-	var bg:FlxGifSprite;
+	var coolBG:FlxGifSprite;
 
 	override public function create():Void
 	{
@@ -99,12 +99,12 @@ class TitleState extends MusicBeatState
 
 		swagShader = new ColorSwap();
 
-		bg = new FlxGifSprite(0, 0);
-		bg.loadGif('assets/images/title/titleBG.gif');
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
-		bg.screenCenter();
+		coolBG = new FlxGifSprite(0, 0);
+		coolBG.loadGif('assets/images/title/titleBG.gif');
+		coolBG.antialiasing = ClientPrefs.globalAntialiasing;
+		coolBG.screenCenter();
 
-		add(bg);
+		add(coolBG);
 		add(logoBl);
 		if (swagShader != null)
 			logoBl.shader = swagShader.shader;
