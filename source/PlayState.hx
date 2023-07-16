@@ -173,7 +173,7 @@ class PlayState extends MusicBeatState
 
 	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
-	// var healthBarOverlay:FlxSprite; // saving this for later
+	var healthBarOverlay:FlxSprite;
 
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
@@ -693,15 +693,17 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
 
-		/* healthBarOverlay = new FlxSprite().loadGraphic(Paths.image('healthBarOverlay'));
-		healthBarOverlay.y = FlxG.height * 0.84;
+		healthBarOverlay = new FlxSprite().loadGraphic(Paths.image('healthBarOverlay'));
+		healthBarOverlay.x = healthBar.x;
+		healthBarOverlay.y = healthBar.y;
 		healthBarOverlay.screenCenter(X);
 		healthBarOverlay.scrollFactor.set();
 		healthBarOverlay.visible = !ClientPrefs.hideHud;
-		healthBarOverlay.x = healthBarBG.x;
 	   		healthBarOverlay.alpha = ClientPrefs.healthBarAlpha;
 		healthBarOverlay.antialiasing = ClientPrefs.globalAntialiasing;
-		add(healthBarOverlay); healthBarOverlay.alpha = ClientPrefs.healthBarAlpha; if(ClientPrefs.downScroll) healthBarOverlay.y = 0.11 * FlxG.height; */
+		if(ClientPrefs.downScroll) 
+			healthBarOverlay.y = 0.11 * FlxG.height;
+		add(healthBarOverlay);
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
