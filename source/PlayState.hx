@@ -694,8 +694,8 @@ class PlayState extends MusicBeatState
 		healthBarBG.sprTracker = healthBar;
 
 		healthBarOverlay = new FlxSprite().loadGraphic(Paths.image('healthBarOverlay'));
-		healthBarOverlay.x = healthBar.x;
-		healthBarOverlay.y = healthBar.y;
+		healthBarOverlay.x = healthBarBG.x + 4;
+		healthBarOverlay.y = healthBarBG.y + 4;
 		healthBarOverlay.screenCenter(X);
 		healthBarOverlay.scrollFactor.set();
 		healthBarOverlay.visible = !ClientPrefs.hideHud;
