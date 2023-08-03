@@ -90,12 +90,9 @@ class TitleState extends MusicBeatState
 		add(bg);
 
 		logoBl = new FlxSprite();
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		logoBl.loadGraphic(Paths.image('title/titleLogo'));
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-		logoBl.animation.play('bump');
 		logoBl.screenCenter(XY);
-		logoBl.updateHitbox();
 
 		swagShader = new ColorSwap();
 
